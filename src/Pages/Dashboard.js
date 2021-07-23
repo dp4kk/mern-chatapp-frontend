@@ -17,6 +17,8 @@ import {
 import RoomIcon from "@material-ui/icons/Room";
 import { useHistory } from "react-router-dom";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 const useStyles = makeStyles((theme) => ({
   center: {
     display: "flex",
@@ -64,6 +66,10 @@ const Dashboard = () => {
   const history = useHistory();
   const classes = useStyles();
   const [chatrooms, setChatrooms] = useState([]);
+   const [error,setError]=useState('')
+  const [errorOpen,setErrorOpen]=useState(false)
+  const [notificationMessage,setNotificationMessage]=useState('')
+  const [messageOpen,setMessageOpen]=useState(false)
   const { user,theme,darkMode,setDarkMode,setChatRoomName } = useContext(AppContext);
   // console.log(user.accessToken)
   const [roomName, setRoomName] = useState("");
@@ -86,6 +92,14 @@ const Dashboard = () => {
       })
     ).json();
       setRoomName('')
+     if(result.error){
+      setError(result.error)
+      setErrorOpen(true)
+    }
+    if(result.message){
+      setNotificationMessage(result.message)
+      setMessageOpen(true)
+    }
     console.log(result);
   },[roomName,user.accessToken]);
 
@@ -118,6 +132,7 @@ const Dashboard = () => {
   } 
 
   return (
+    <React.Fragment>
     <ThemeProvider theme={theme}>
     <Paper className={classes.image}>
     <IconButton className={classes.icon} onClick={()=>setDarkMode(!darkMode)}><Brightness4Icon fontSize='large'/></IconButton>
@@ -180,6 +195,12 @@ const Dashboard = () => {
       </div>
       </Paper>
       </ThemeProvider>
+      {error && <Snackbar open={errorOpen} autoHideDuration={3000} onClose={()=>setErrorOpen(false)} anchorOrigin={{vertical:'top',horizontal:'left'}}>
+        <Alert severity='error'>{error}</Alert>
+      </Snackbar>}
+      {notificationMessage && <Snackbar open={messageOpen} autoHideDuration={3000} onClose={()=>setMessageOpen(false)} anchorOrigin={{vertical:'top',horizontal:'left'}}>
+        <Alert severity='success'>{notificationMessage}</Alert></Snackbar>}
+      </React.Fragment>
   );
 };
 
