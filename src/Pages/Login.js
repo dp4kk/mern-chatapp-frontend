@@ -30,8 +30,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 0),
   },
+  link : {
+    marginTop: theme.spacing(1)
+  }
 }));
 
 export default function Login() {
@@ -85,7 +88,20 @@ export default function Login() {
       setOpen(true);
     }
   };
+const handleCredentialone=()=>{
+  setEmail('guestuser01@gmail.com')
+  setPassword('guestuser01')
+}
+  
+const handleCredentialtwo=()=>{
+  setEmail('guest02@gmail.com')
+  setPassword('guestuser02')
+}
 
+const handleCredentialthree=()=>{
+  setEmail('guestuser03@gmail.com')
+  setPassword('guestuser03')
+}
   
 
   useEffect(() => {
@@ -118,6 +134,7 @@ export default function Login() {
                   autoComplete="off"
                   onChange={handleEmailChange}
                   spellCheck='false'
+                   value={email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -131,6 +148,7 @@ export default function Login() {
                   id="spassword"
                   autoComplete="off"
                   onChange={handlePasswordChange}
+                  value={password}
                 />
               </Grid>
             </Grid>
@@ -143,8 +161,38 @@ export default function Login() {
             >
               Login
             </Button>
+               <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleCredentialone}
+            >
+              Login Credential 01
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleCredentialtwo}
+            >
+              Login Credential 02
+            </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleCredentialthree}
+            >
+              Login Credential 03
+            </Button>
             <Grid container justify="flex-end">
-              <Grid item>
+              <Grid item className={classes.link}>
                 <Link href="/register" variant="body2">
                   Don't have an account? Sign up
                 </Link>
